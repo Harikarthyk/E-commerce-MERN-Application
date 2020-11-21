@@ -1,0 +1,92 @@
+.buypage {
+	min-height: 60.6vh;
+	margin: 30px;
+}
+
+.buypage__header {
+	margin-bottom: 20px;
+	font-size: x-large;
+	text-transform: capitalize;
+	font-weight: bold;
+	border-bottom: 2px solid;
+	padding-bottom: 10px;
+}
+
+.buypage__body__field {
+	margin: 20px;
+}
+
+input.buypage__body__field__input {
+	padding: 6px;
+	font-size: initial;
+	width: -webkit-fill-available;
+}
+
+textarea.buypage__body__field__textarea {
+	width: -webkit-fill-available;
+	height: 125px;
+	font-size: larger;
+}
+
+.buypage__body__field__note {
+	text-align: center;
+	font-weight: bold;
+	font-style: italic;
+	font-size: unset;
+}
+
+.buypage__body__field__label {
+	margin-bottom: 8px;
+	font-weight: bolder;
+}
+.buypage__body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+
+.buypage__body__total {
+	padding: 19px;
+	font-weight: bold;
+	font-size: larger;
+	text-transform: capitalize;
+	background: #131921;
+	border-radius: 6px;
+	color: white;
+}
+
+.buypage__body__left {
+	flex: 2;
+}
+
+.buypage__body__right {
+	flex: 1 1;
+	display: flex;
+	/* text-align: center; */
+	align-items: center;
+	flex-direction: column;
+	width: fit-content;
+	text-align: center;
+	height: fit-content;
+}
+button.buypage__body__right {
+	margin: 12px 0;
+	padding: 6px;
+	border: none;
+	font-size: initial;
+	font-variant: petite-caps;
+	font-weight: bolder;
+	background: #cd9042;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+@media (max-width: 800px) {
+	.buypage__body {
+		flex-direction: column;
+	}
+	.buypage__body__right {
+		margin: 30px 0;
+	}
+}

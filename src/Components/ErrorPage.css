@@ -1,0 +1,16 @@
+.errorpage {
+	min-height: 75vh;
+	padding: 20px;
+	font-size: xxx-large;
+	text-align: center;
+	text-transform: capitalize;
+}
+
+a.errorpage__link {
+	display: flex;
+	justify-content: center;
+	font-size: large;
+	text-decoration: none;
+	font-style: italic;
+	margin-top: 20px;
+}
