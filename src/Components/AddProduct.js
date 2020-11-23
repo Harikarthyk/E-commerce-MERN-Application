@@ -1,31 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import { FaPlusCircle } from 'react-icons/fa';
-import Loader from 'react-loader-spinner';
-import { isAuthenticated } from '../helper/auth';
-import { fetchAllCategories } from '../helper/categories';
-import { addProduct } from '../helper/product';
+import React, {useEffect, useState} from "react";
+import {FaPlusCircle} from "react-icons/fa";
+import Loader from "react-loader-spinner";
+import {isAuthenticated} from "../helper/auth";
+import {fetchAllCategories} from "../helper/categories";
+import {addProduct} from "../helper/product";
 
 function AddProduct() {
 	const [size, setSize] = useState([]);
 	const [input, setInput] = useState({
-		name: '',
+		name: "",
 		category: 0,
-		photo: '',
-		stock: '',
-		price: '',
-		description: '',
+		photo: "",
+		stock: "",
+		price: "",
+		description: "",
 	});
 	const [categories, setCategories] = useState([]);
 	const [output, setOutput] = useState({
 		error: false,
-		message: '',
+		message: "",
 	});
 	const [loading, setLoading] = useState(false);
 	useEffect(() => {
 		fetchAllCategories().then((result) => {
 			if (!result) return;
 			if (result.error) {
-				setOutput({ ...output, error: true, message: result.error });
+				setOutput({...output, error: true, message: result.error});
 				return;
 			}
 			setCategories(result.categories);
@@ -35,32 +35,32 @@ function AddProduct() {
 	const handleClick = () => {
 		let formData = new FormData();
 		if (input.category === 0) {
-			alert('Select Category');
+			alert("Select Category");
 			return;
 		}
 		setLoading(true);
-		formData.set('name', input.name);
-		formData.set('category', input.category);
-		formData.set('photo', input.photo);
-		formData.set('stock', input.stock);
-		formData.set('price', input.price);
-		formData.set('size', size);
-		formData.set('description', input.description);
-		let { user, token } = isAuthenticated();
+		formData.set("name", input.name);
+		formData.set("category", input.category);
+		formData.set("photo", input.photo);
+		formData.set("stock", input.stock);
+		formData.set("price", input.price);
+		formData.set("size", size);
+		formData.set("description", input.description);
+		let {user, token} = isAuthenticated();
 		addProduct(formData, token, user._id).then((result) => {
 			if (!result || result.error) {
 				if (!result) return;
-				setOutput({ ...output, error: true, message: result.error });
+				setOutput({...output, error: true, message: result.error});
 				return;
 			}
-			setOutput({ ...output, error: false, message: result.message });
+			setOutput({...output, error: false, message: result.message});
 			setInput({
 				...input,
-				name: '',
-				photo: '',
-				stock: '',
-				price: '',
-				description: '',
+				name: "",
+				photo: "",
+				stock: "",
+				price: "",
+				description: "",
 			});
 			setLoading(false);
 		});
@@ -73,14 +73,14 @@ function AddProduct() {
 						className="result__message"
 						style={
 							output.error
-								? { backgroundColor: '#ea6c6c' }
-								: { backgroundColor: '#8bc34a' }
+								? {backgroundColor: "#ea6c6c"}
+								: {backgroundColor: "#8bc34a"}
 						}
 					>
 						{output.message}
 					</div>
 				) : (
-					''
+					""
 				)}
 			</div>
 		);
@@ -92,7 +92,7 @@ function AddProduct() {
 				<input
 					type="text"
 					onChange={(e) => {
-						setInput({ ...input, name: e.target.value });
+						setInput({...input, name: e.target.value});
 					}}
 					value={input.name}
 				/>
@@ -101,7 +101,7 @@ function AddProduct() {
 				<div className="addcategory__field__label">Select Category</div>
 				<select
 					onChange={(e) => {
-						setInput({ ...input, category: e.target.value });
+						setInput({...input, category: e.target.value});
 					}}
 				>
 					<option value={0}>select category</option>
@@ -116,7 +116,7 @@ function AddProduct() {
 			</div>
 			<div className="addcategory__field">
 				<input
-					onChange={(e) => setInput({ ...input, photo: e.target.files[0] })}
+					onChange={(e) => setInput({...input, photo: e.target.files[0]})}
 					type="file"
 					accept="image"
 					placeholder="choose a file"
@@ -125,7 +125,7 @@ function AddProduct() {
 			<div className="addcategory__field">
 				<div className="addcategory__field__label">Stock </div>
 				<input
-					onChange={(e) => setInput({ ...input, stock: e.target.value })}
+					onChange={(e) => setInput({...input, stock: e.target.value})}
 					type="number"
 					value={input.stock}
 				/>
@@ -133,7 +133,7 @@ function AddProduct() {
 			<div className="addcategory__field">
 				<div className="addcategory__field__label">Price </div>
 				<input
-					onChange={(e) => setInput({ ...input, price: e.target.value })}
+					onChange={(e) => setInput({...input, price: e.target.value})}
 					type="number"
 					value={input.price}
 				/>
@@ -143,24 +143,24 @@ function AddProduct() {
 				<div
 					className="viewparticularproduct__sizes__label"
 					style={
-						size.includes('S')
+						size.includes("S")
 							? {
-									color: 'white',
-									background: '#131921',
-									fontWeight: 'bolder',
-									boxShadow: '-4px -1px 20px 0px',
+									color: "white",
+									background: "#131921",
+									fontWeight: "bolder",
+									boxShadow: "-4px -1px 20px 0px",
 							  }
 							: {
-									background: 'white',
+									background: "white",
 							  }
 					}
 					onClick={() => {
-						if (size.includes('S')) {
-							let newSize = size.filter((s) => s !== 'S');
+						if (size.includes("S")) {
+							let newSize = size.filter((s) => s !== "S");
 							setSize(newSize);
 						} else {
 							let newSize = size;
-							newSize.push('S');
+							newSize.push("S");
 							setSize(newSize);
 						}
 					}}
@@ -170,24 +170,24 @@ function AddProduct() {
 				<div
 					className="viewparticularproduct__sizes__label"
 					style={
-						size.includes('M')
+						size.includes("M")
 							? {
-									color: 'white',
-									background: '#131921',
-									fontWeight: 'bolder',
-									boxShadow: '-4px -1px 20px 0px',
+									color: "white",
+									background: "#131921",
+									fontWeight: "bolder",
+									boxShadow: "-4px -1px 20px 0px",
 							  }
 							: {
-									background: 'white',
+									background: "white",
 							  }
 					}
 					onClick={() => {
-						if (size.includes('M')) {
-							let newSize = size.filter((s) => s !== 'M');
+						if (size.includes("M")) {
+							let newSize = size.filter((s) => s !== "M");
 							setSize(newSize);
 						} else {
 							let newSize = size;
-							newSize.push('M');
+							newSize.push("M");
 							setSize(newSize);
 						}
 					}}
@@ -197,24 +197,24 @@ function AddProduct() {
 				<div
 					className="viewparticularproduct__sizes__label"
 					style={
-						size.includes('L')
+						size.includes("L")
 							? {
-									color: 'white',
-									background: '#131921',
-									fontWeight: 'bolder',
-									boxShadow: '-4px -1px 20px 0px',
+									color: "white",
+									background: "#131921",
+									fontWeight: "bolder",
+									boxShadow: "-4px -1px 20px 0px",
 							  }
 							: {
-									background: 'white',
+									background: "white",
 							  }
 					}
 					onClick={() => {
-						if (size.includes('L')) {
-							let newSize = size.filter((s) => s !== 'L');
+						if (size.includes("L")) {
+							let newSize = size.filter((s) => s !== "L");
 							setSize(newSize);
 						} else {
 							let newSize = size;
-							newSize.push('L');
+							newSize.push("L");
 							setSize(newSize);
 						}
 					}}
@@ -225,7 +225,7 @@ function AddProduct() {
 			<div className="addcategory__field">
 				<div className="addcategory__field__label">Description </div>
 				<textarea
-					onChange={(e) => setInput({ ...input, description: e.target.value })}
+					onChange={(e) => setInput({...input, description: e.target.value})}
 					value={input.description}
 				/>
 			</div>
@@ -235,7 +235,14 @@ function AddProduct() {
 					<Loader type="Oval" color="#00BFFF" height={50} width={50} />
 				</div>
 			) : (
-				''
+				""
+			)}
+			{loading ? (
+				<div className="loading">
+					<Loader type="Oval" color="#00BFFF" height={50} width={50} />
+				</div>
+			) : (
+				""
 			)}
 			<div className="addcategory__submit">
 				<button

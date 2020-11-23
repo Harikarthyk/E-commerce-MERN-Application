@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { FaTrash, FaUpload } from 'react-icons/fa';
-import Loader from 'react-loader-spinner';
-import { isAuthenticated } from '../helper/auth';
-import { fetchAllCategories } from '../helper/categories';
-import {
-	deleteProduct,
-	getAllProducts,
-	getEachProduct,
-} from '../helper/product';
+import React, {useEffect, useState} from "react";
+import {FaTrash, FaUpload} from "react-icons/fa";
+import Loader from "react-loader-spinner";
+import {isAuthenticated} from "../helper/auth";
+import {fetchAllCategories} from "../helper/categories";
+import {deleteProduct, getAllProducts, getEachProduct} from "../helper/product";
 
 function ViewProduct() {
 	const [categories, setCategories] = useState([]);
@@ -43,15 +39,14 @@ function ViewProduct() {
 						console.error(result.error);
 						return;
 					}
-					console.log(result);
 					setProducts(result.products);
 					setLoading(false);
 				})
 				.catch((error) => console.error(error));
 	}, [currentCategory, setCurrentCategory]);
-	const API = 'https://e-commerce-clothings.herokuapp.com/api';
+	const API = "https://e-commerce-clothings.herokuapp.com/api";
 
-	const ImageHelper = ({ product }) => {
+	const ImageHelper = ({product}) => {
 		const imageurl = product
 			? `${API}/product/photo/${product._id}`
 			: `https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940`;
@@ -62,14 +57,16 @@ function ViewProduct() {
 		);
 	};
 	const handleClickTrash = (productId) => {
-		const { user, token } = isAuthenticated();
+		const {user, token} = isAuthenticated();
 		deleteProduct(productId, user._id, token).then((result) => {
 			if (result.error) {
 				console.error(result.error);
 				return;
 			}
 
-			alert('Product Deleted Successfully');
+			alert(
+				"Product Deleted Successfully , refresh if the product is not deleted",
+			);
 			setCurrentCategory(currentCategory);
 		});
 	};
@@ -93,7 +90,7 @@ function ViewProduct() {
 					<Loader type="Oval" color="#00BFFF" height={50} width={50} />
 				</div>
 			) : (
-				''
+				""
 			)}
 			<div className="viewproduct__body">
 				<div className="viewproduct__body__total">
@@ -104,7 +101,7 @@ function ViewProduct() {
 						No prodcut found in this Category : (
 					</div>
 				) : (
-					''
+					""
 				)}
 				{products.map((product, index) => {
 					return (
@@ -127,11 +124,11 @@ function ViewProduct() {
 										Price <b>{product.price} Rs</b>
 									</div>
 								</div>
-								<div className="viewproduct__body__product__fied__input">
+								{/* <div className="viewproduct__body__product__fied__input">
 									<button>
 										<FaUpload />
 									</button>
-								</div>
+								</div> */}
 								<div className="viewproduct__body__product__fied__input">
 									<button onClick={() => handleClickTrash(product._id)}>
 										<FaTrash />

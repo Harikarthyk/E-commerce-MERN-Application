@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
-import { isAuthenticated } from '../helper/auth';
-import AddCategory from './AddCategory';
-import AddProduct from './AddProduct';
-import './Adminpage.css';
-import ViewAllOrders from './ViewAllOrders';
-import Viewcategory from './Viewcategory';
-import ViewProduct from './ViewProduct';
+import React, {useState} from "react";
+import {Redirect} from "react-router-dom";
+import {isAuthenticated} from "../helper/auth";
+import AddCategory from "./AddCategory";
+import AddProduct from "./AddProduct";
+import "./Adminpage.css";
+import ViewAllOrders from "./ViewAllOrders";
+import Viewcategory from "./Viewcategory";
+import ViewProduct from "./ViewProduct";
 
 function Adminpage() {
-	const [view, setView] = useState('Manage Categories');
-	const { user } = isAuthenticated();
+	const [view, setView] = useState("Manage Categories");
+	const {user} = isAuthenticated();
 	const showAdminDashboard = () => {
-		if (view === 'Manage Categories') {
+		if (view === "Manage Categories") {
 			return <Viewcategory />;
-		} else if (view === 'Add Category') return <AddCategory />;
-		else if (view === 'Add products') return <AddProduct />;
-		else if (view === 'ViewAllOrders.js') return <ViewProduct />;
+		} else if (view === "Add Category") return <AddCategory />;
+		else if (view === "Add products") return <AddProduct />;
+		else if (view === "ViewAllOrders.js") return <ViewProduct />;
 		else return <ViewAllOrders />;
 	};
 	if (!user) return <Redirect to="/" />;

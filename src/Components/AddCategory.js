@@ -1,27 +1,30 @@
-import React, { useContext, useState } from 'react';
-import { FaPlusCircle } from 'react-icons/fa';
-import UserContext from '../context/UserContext';
-import { addCategorytoDB } from '../helper/categories';
+import React, {useContext, useState} from "react";
+import {FaPlusCircle} from "react-icons/fa";
+import Loader from "react-loader-spinner";
+import UserContext from "../context/UserContext";
+import {addCategorytoDB} from "../helper/categories";
 
 function AddCategory() {
 	const [input, setInput] = useState({
-		name: '',
-		link: '',
+		name: "",
+		link: "",
 	});
 	const [output, setOutput] = useState({
 		error: false,
-		message: '',
+		message: "",
 	});
+	const [loading, setLoading] = useState(false);
 	const context = useContext(UserContext);
 	const handleClick = () => {
-		console.log(context.user._id, context.token, input);
+		setLoading(true);
 		addCategorytoDB(context.user._id, context.token, input)
 			.then((result) => {
 				if (result.error) {
-					setOutput({ ...output, error: true, message: result.error });
+					setOutput({...output, error: true, message: result.error});
 					return;
 				}
-				setOutput({ ...output, error: false, message: result.message });
+				setOutput({...output, error: false, message: result.message});
+				setLoading(false);
 			})
 			.catch((error) => console.error(error));
 	};
@@ -33,26 +36,33 @@ function AddCategory() {
 						className="result__message"
 						style={
 							output.error
-								? { backgroundColor: '#ea6c6c' }
-								: { backgroundColor: '#8bc34a' }
+								? {backgroundColor: "#ea6c6c"}
+								: {backgroundColor: "#8bc34a"}
 						}
 					>
 						{output.message}
 					</div>
 				) : (
-					''
+					""
 				)}
 			</div>
 		);
 	};
 	return (
 		<div className="addcategory">
+			{loading ? (
+				<div className="loading">
+					<Loader type="Oval" color="#00BFFF" height={50} width={50} />
+				</div>
+			) : (
+				""
+			)}
 			<div className="addcategory__field">
 				<div className="addcategory__field__label">Category Name :</div>
 				<input
 					type="text"
 					value={input.name}
-					onChange={(e) => setInput({ ...input, name: e.target.value })}
+					onChange={(e) => setInput({...input, name: e.target.value})}
 				/>
 			</div>
 			<div className="addcategory__field">
@@ -60,7 +70,7 @@ function AddCategory() {
 				<input
 					type="text"
 					value={input.link}
-					onChange={(e) => setInput({ ...input, link: e.target.value })}
+					onChange={(e) => setInput({...input, link: e.target.value})}
 				/>
 			</div>
 			{showResult()}
