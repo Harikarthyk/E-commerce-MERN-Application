@@ -46,7 +46,8 @@ function Login() {
 			</div>
 		);
 	};
-	const handleClick = () => {
+	const handleClick = (e) => {
+		e.preventDefault();
 		setOutput({...input, loading: true});
 		login(input)
 			.then((result) => {
@@ -60,9 +61,9 @@ function Login() {
 					setUser(result.user);
 					setToken(result.token);
 					authenticate(result);
+					setOutput({...output, redirect: true});
 				}
 				setOutput({...output, message: msg, error: err, loading: false});
-				setOutput({...output, redirect: true});
 			})
 			.catch((error) => console.error(error));
 	};
@@ -70,8 +71,9 @@ function Login() {
 	return (
 		<div className="login">
 			<div className="login__heading">Login</div>
+			{console.log(output)}
 			<div className="login__wrapper">
-				<div className="login__wrapper__body">
+				<form className="login__wrapper__body">
 					<div className="login__wrapper__body__field">
 						<div className="login__wrapper__body__label">Email</div>
 						<input
@@ -108,12 +110,12 @@ function Login() {
 						)}
 					</div>
 					<div className="login__wrapper__login__button">
-						<button onClick={() => handleClick()}>Login</button>
+						<button onClick={(e) => handleClick(e)}>Login</button>
 					</div>
 					<div className="login__wrapper__forgetpassword">
 						<Link to="/forgotpassword">forgot your password?</Link>
 					</div>
-				</div>
+				</form>
 				<div className="login__wrapper__btn">
 					<div className="login__wrapper__subheading">New Customer?</div>
 					<Link to="/createAccount">
