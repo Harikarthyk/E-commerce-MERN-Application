@@ -144,6 +144,9 @@ a.viewparticularproduct__back {
 		flex-direction: column;
 		align-items: center;
 	}
+	.viewparticularproduct__img__wrapper {
+		width: auto;
+	}
 }
 @media (max-width: 500px) {
 	.viewparticularproduct__rightside {
@@ -156,6 +159,9 @@ a.viewparticularproduct__back {
 	}
 	.viewparticularproduct__title {
 		font-size: initial;
+	}
+	.viewparticularproduct__img__wrapper {
+		width: auto;
 	}
 	.viewparticularproduct__quantity__number {
 		padding: 1px;
