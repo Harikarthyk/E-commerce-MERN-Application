@@ -72,10 +72,8 @@ function ForgotPassword() {
 		e.preventDefault();
 		setLoading(true);
 		let ip = {};
-
 		ip["email"] = email;
 		ip["password"] = password;
-		console.log(ip);
 		savePasswordtoDB(ip)
 			.then((result) => {
 				if (result.error) {

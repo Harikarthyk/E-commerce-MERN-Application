@@ -139,7 +139,7 @@ button.login__wrapper__btn__listner {
 	text-decoration-line: underline;
 	margin: 20px;
 }
-@media (max-width: 700px) {
+@media (max-width: 750px) {
 	.login__wrapper {
 		flex-direction: column;
 	}
