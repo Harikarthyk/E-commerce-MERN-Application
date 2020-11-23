@@ -1,0 +1,16 @@
+.settings__header {
+	font-size: x-large;
+	margin: 20px;
+	border-bottom: 1px solid;
+	font-weight: bolder;
+}
+
+.settings__body {
+	margin: 20px;
+}
+.settings__tab {
+	margin: 15px 0;
+}
+.settings {
+	min-height: 65vh;
+}

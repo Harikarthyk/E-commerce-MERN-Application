@@ -106,7 +106,7 @@ function Navbar() {
 				{user ? (
 					<Link to="settings">
 						<div
-							style={{color: "white", fontSize: "x-large"}}
+							style={{color: "white", fontSize: "larger"}}
 							className="header__option"
 						>
 							<FaUserCog />
