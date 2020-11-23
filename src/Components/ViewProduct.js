@@ -13,7 +13,7 @@ function ViewProduct() {
 	const [categories, setCategories] = useState([]);
 	const [currentCategory, setCurrentCategory] = useState(0);
 	const [products, setProducts] = useState([]);
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
 	useEffect(() => {
 		fetchAllCategories().then((result) => {
 			if (result.error) {

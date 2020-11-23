@@ -140,7 +140,9 @@ button.addcategory__submitbtn {
 .viewproduct__body__product {
 	margin: 15px 0;
 }
-
+.viewparticularproduct__img__wrapper {
+	width: 450px;
+}
 .viewproduct__img__wrapper img {
 	width: 102px;
 	border-radius: 4px;

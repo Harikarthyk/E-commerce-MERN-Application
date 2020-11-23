@@ -56,7 +56,6 @@ input.login__wrapper__body__inputfield {
 .login__wrapper__body__label {
 	margin-bottom: 9px;
 	font-weight: 700;
-	font-variant-caps: petite-caps;
 }
 .login__wrapper__login__button {
 	margin: 5px 20px;
@@ -125,12 +124,20 @@ button.login__wrapper__btn__listner {
 	background: #8bc34a;
 	border-radius: 11px;
 	font-weight: bolder;
-	font-feature-settings: 'smcp', 'c2sc';
+	font-feature-settings: "smcp", "c2sc";
 	font-variant-caps: all-small-caps;
 	align-items: center;
 	justify-content: center;
 	/* width: 90%; */
 	margin-right: 18px;
+}
+.login__wrapper__forgetpassword a {
+	text-decoration: none;
+	color: black;
+	font-size: x-small;
+	font-style: italic;
+	text-decoration-line: underline;
+	margin: 20px;
 }
 @media (max-width: 700px) {
 	.login__wrapper {

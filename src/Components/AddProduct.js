@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FaPlusCircle } from 'react-icons/fa';
+import Loader from 'react-loader-spinner';
 import { isAuthenticated } from '../helper/auth';
 import { fetchAllCategories } from '../helper/categories';
 import { addProduct } from '../helper/product';
@@ -19,6 +20,7 @@ function AddProduct() {
 		error: false,
 		message: '',
 	});
+	const [loading, setLoading] = useState(false);
 	useEffect(() => {
 		fetchAllCategories().then((result) => {
 			if (!result) return;
@@ -36,6 +38,7 @@ function AddProduct() {
 			alert('Select Category');
 			return;
 		}
+		setLoading(true);
 		formData.set('name', input.name);
 		formData.set('category', input.category);
 		formData.set('photo', input.photo);
@@ -59,6 +62,7 @@ function AddProduct() {
 				price: '',
 				description: '',
 			});
+			setLoading(false);
 		});
 	};
 	const showResult = () => {
@@ -226,6 +230,13 @@ function AddProduct() {
 				/>
 			</div>
 			{showResult()}
+			{loading ? (
+				<div className="loading">
+					<Loader type="Oval" color="#00BFFF" height={50} width={50} />
+				</div>
+			) : (
+				''
+			)}
 			<div className="addcategory__submit">
 				<button
 					onClick={() => handleClick()}

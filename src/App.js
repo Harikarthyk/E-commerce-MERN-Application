@@ -14,6 +14,7 @@ import CheckOut from './Components/CheckOut';
 import BuyPage from './Components/BuyPage';
 import Order from './Components/Order';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+import ForgotPassword from './Components/ForgotPassword';
 
 function App() {
 	const [user, setUser] = useState(null);
@@ -43,6 +44,7 @@ function App() {
 						<Route exact path="/checkout" component={CheckOut} />
 						<Route exact path="/checkout/buy" component={BuyPage} />
 						<Route exact path="/orders/*" component={Order} />
+						<Route exact path="/forgotpassword" component={ForgotPassword} />
 						<Route
 							path="/instagram"
 							component={() => {

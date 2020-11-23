@@ -1,29 +1,29 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { FaSearch, FaShoppingBasket } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
-import UserContext from '../context/UserContext';
-import { isAuthenticated } from '../helper/auth';
-import { logout } from '../helper/logout';
-import './Header.css';
+import React, {useContext, useEffect, useState} from "react";
+import {FaSearch, FaShoppingBasket, FaUserCog} from "react-icons/fa";
+import {Link} from "react-router-dom";
+import UserContext from "../context/UserContext";
+import {isAuthenticated} from "../helper/auth";
+import {logout} from "../helper/logout";
+import "./Header.css";
 function Navbar() {
 	const context = useContext(UserContext);
 	const [cart, setCart] = useState(0);
-	const { user, setUser } = context;
+	const {user, setUser} = context;
 	useEffect(() => {
 		updateCart();
 	}, [context.setClick, context.click]);
 	const updateCart = () => {
-		if (!localStorage.getItem('cart')) {
+		if (!localStorage.getItem("cart")) {
 			let temp = [];
-			localStorage.setItem('cart', JSON.stringify(temp));
+			localStorage.setItem("cart", JSON.stringify(temp));
 		}
-		let newCart = JSON.parse(localStorage.getItem('cart'));
+		let newCart = JSON.parse(localStorage.getItem("cart"));
 
 		setCart(newCart);
-		return '';
+		return "";
 	};
 	useEffect(() => {
-		let { user } = isAuthenticated();
+		let {user} = isAuthenticated();
 		if (user) {
 			setUser(user);
 		} else setUser(false);
@@ -59,7 +59,7 @@ function Navbar() {
 						{user ? (
 							<div onClick={() => handleClick()}>
 								<div
-									style={{ color: 'white', textDecoration: 'none' }}
+									style={{color: "white", textDecoration: "none"}}
 									className="header__option"
 								>
 									<span className="header__optionLineOne">
@@ -70,7 +70,7 @@ function Navbar() {
 							</div>
 						) : (
 							<Link to="/login">
-								<div style={{ color: 'white' }} className="header__option">
+								<div style={{color: "white"}} className="header__option">
 									<span className="header__optionLineOne">Hello Guest</span>
 									<span className="header__optionLineTwo">Signin</span>
 								</div>
@@ -78,6 +78,7 @@ function Navbar() {
 						)}
 					</div>
 				</div>
+
 				{user && user.role === 1 ? (
 					<Link to="/adminpage">
 						<div className="header__link">
@@ -88,7 +89,7 @@ function Navbar() {
 						</div>
 					</Link>
 				) : (
-					''
+					""
 				)}
 				{user && user.role !== 1 ? (
 					<Link to={`/orders/${user._id}`}>
@@ -100,14 +101,26 @@ function Navbar() {
 						</div>
 					</Link>
 				) : (
-					''
+					""
+				)}
+				{user ? (
+					<Link to="settings">
+						<div
+							style={{color: "white", fontSize: "x-large"}}
+							className="header__option"
+						>
+							<FaUserCog />
+						</div>
+					</Link>
+				) : (
+					""
 				)}
 				<Link to="/checkout">
 					<div className=" header_baskerLink">
 						<div className="header__optionbasket">
-							<FaShoppingBasket style={{ fontSize: '21px' }} />
+							<FaShoppingBasket style={{fontSize: "21px"}} />
 							<div className="header_optionLineTwo header__basketcount">
-								{cart.length}{' '}
+								{cart.length}{" "}
 							</div>
 						</div>
 					</div>
