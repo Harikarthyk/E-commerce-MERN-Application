@@ -36,7 +36,18 @@ span.adminpage__title__card {
 	padding: 0px 10px;
 }
 /* view Category */
-
+button.viewcategory__update {
+	display: flex;
+	margin: auto;
+	margin-bottom: 20px;
+	padding: 9px;
+	border-radius: 9px;
+	border: 1px solid;
+	cursor: pointer;
+	background: #131921;
+	font-weight: 900;
+	color: white;
+}
 .viewcategory__list {
 	display: flex;
 	justify-content: center;
