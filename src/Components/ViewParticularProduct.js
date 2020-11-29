@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { FaShoppingCart } from 'react-icons/fa';
+import React, {useContext, useEffect, useState} from 'react';
+import {FaShoppingCart} from 'react-icons/fa';
 import Loader from 'react-loader-spinner';
-import { Link, useHistory } from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import UserContext from '../context/UserContext';
-import { getProductByProductId } from '../helper/product';
+import {getProductByProductId} from '../helper/product';
 import './ViewParticularProduct.css';
 
 function ViewParticularProduct() {
@@ -16,6 +16,7 @@ function ViewParticularProduct() {
 	const [availableSize, setAvailableSize] = useState([]);
 	const [cart, setCart] = useState([]);
 	useEffect(() => {
+		setLoading(true);
 		let productId = history.location.pathname.split('/')[2];
 		getProductByProductId(productId)
 			.then((result) => {
@@ -36,21 +37,25 @@ function ViewParticularProduct() {
 				setProduct(result.product);
 			})
 			.catch((error) => console.error(error));
-	}, []);
+	}, [context.setShowDropDown, context.showDropDown]);
 	const showDescription = (str) => {
 		let arr = JSON.parse(str).split(/\r\n|\r|\n/);
-		return arr.map((a) => {
-			return <div className="description">{a}</div>;
+		return arr.map((a, index) => {
+			return (
+				<div key={index} className='description'>
+					{a}
+				</div>
+			);
 		});
 	};
 	const API = 'https://e-commerce-clothings.herokuapp.com/api';
 
-	const ImageHelper = ({ product }) => {
+	const ImageHelper = ({product}) => {
 		const imageurl = product
 			? `${API}/product/photo/${product._id}`
 			: `https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940`;
 		return (
-			<div className="viewparticularproduct__img__wrapper">
+			<div className='viewparticularproduct__img__wrapper'>
 				<img src={imageurl} alt={product._id} />
 			</div>
 		);
@@ -85,49 +90,54 @@ function ViewParticularProduct() {
 		localStorage.setItem('cart', JSON.stringify(newCart));
 	};
 	return (
-		<div className="viewparticularproduct">
+		<div
+			onClick={() => {
+				context.setShowDropDown(false);
+			}}
+			className='viewparticularproduct'
+		>
 			{loading || product.length === 0 ? (
-				<div className="loading">
-					<Loader type="Oval" color="#00BFFF" height={50} width={50} />
+				<div className='loading'>
+					<Loader type='Oval' color='#00BFFF' height={50} width={50} />
 				</div>
 			) : (
 				<>
-					<div className="viewparticularproduct__wrapper">
+					<div className='viewparticularproduct__wrapper'>
 						<ImageHelper product={product} />
-						<div className="viewparticularproduct__rightside">
-							<div className="viewparticularproduct__title">{product.name}</div>
-							<div className="viewparticularproduct__category">
+						<div className='viewparticularproduct__rightside'>
+							<div className='viewparticularproduct__title'>{product.name}</div>
+							<div className='viewparticularproduct__category'>
 								{product.category.name}
 							</div>
 							{product.stock === 0 ? (
 								<div
-									className="viewparticularproduct__tag"
-									style={{ background: 'red' }}
+									className='viewparticularproduct__tag'
+									style={{background: 'red'}}
 								>
 									OUT OF STOCK
 								</div>
 							) : (
 								<div
-									className="viewparticularproduct__tag"
-									style={{ background: '#131921' }}
+									className='viewparticularproduct__tag'
+									style={{background: '#131921'}}
 								>
 									50% OFF
 								</div>
 							)}
 
-							<div className="viewparticularproduct__price">
-								<span className="viewparticularproduct__price__span">
+							<div className='viewparticularproduct__price'>
+								<span className='viewparticularproduct__price__span'>
 									Rs. {product.price * 2}
 								</span>
 								Rs. {product.price}
 							</div>
-							<div className="viewparticularproduct__sizes">
+							<div className='viewparticularproduct__sizes'>
 								Sizes
 								{availableSize.map((s, i) => {
 									return (
 										<div
 											key={i}
-											className="viewparticularproduct__sizes__label"
+											className='viewparticularproduct__sizes__label'
 											style={
 												size === s
 													? {
@@ -149,9 +159,9 @@ function ViewParticularProduct() {
 									);
 								})}
 							</div>
-							<div className="viewparticularproduct__quantity">
+							<div className='viewparticularproduct__quantity'>
 								<div
-									className="viewparticularproduct__quantity__plus"
+									className='viewparticularproduct__quantity__plus'
 									onClick={() => {
 										handleClick(product);
 										if (currCount < product.stock - 1)
@@ -160,11 +170,11 @@ function ViewParticularProduct() {
 								>
 									+
 								</div>
-								<div className="viewparticularproduct__quantity__number">
+								<div className='viewparticularproduct__quantity__number'>
 									{currCount}
 								</div>
 								<div
-									className="viewparticularproduct__quantity__minus"
+									className='viewparticularproduct__quantity__minus'
 									onClick={() => {
 										handleClick(product);
 										if (currCount > 1) setCurrCount(currCount - 1);
@@ -174,18 +184,18 @@ function ViewParticularProduct() {
 								</div>
 							</div>
 							{product.stock === 0 ? (
-								<div className="viewparticularproduct__cart">Out of Stock</div>
+								<div className='viewparticularproduct__cart'>Out of Stock</div>
 							) : (
 								<button
 									onClick={() => handleClick(product)}
-									className="viewparticularproduct__cart"
+									className='viewparticularproduct__cart'
 									disabled={product.stock === 0}
 								>
 									Add to Cart <FaShoppingCart />
 								</button>
 							)}
 							<Link
-								className="viewparticularproduct__back"
+								className='viewparticularproduct__back'
 								to={`/category/${product.category._id}`}
 							>
 								Back
@@ -193,8 +203,8 @@ function ViewParticularProduct() {
 						</div>
 					</div>
 
-					<div className="viewparticularproduct__description">
-						<div className="viewparticularproduct__description__title">
+					<div className='viewparticularproduct__description'>
+						<div className='viewparticularproduct__description__title'>
 							Description
 						</div>
 						{showDescription(JSON.stringify(product.description))}

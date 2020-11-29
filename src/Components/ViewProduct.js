@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {FaPen, FaTrash} from 'react-icons/fa';
 import Loader from 'react-loader-spinner';
+import UserContext from '../context/UserContext';
 import {isAuthenticated} from '../helper/auth';
 import {fetchAllCategories} from '../helper/categories';
 import {deleteProduct, getAllProducts, getEachProduct} from '../helper/product';
@@ -10,7 +11,7 @@ function ViewProduct() {
 	const [currentCategory, setCurrentCategory] = useState(0);
 	const [products, setProducts] = useState([]);
 	const [loading, setLoading] = useState(true);
-
+	const context = useContext(UserContext);
 	useEffect(() => {
 		fetchAllCategories().then((result) => {
 			if (result.error) {
@@ -76,7 +77,12 @@ function ViewProduct() {
 		console.log(product);
 	};
 	return (
-		<div className='viewproduct'>
+		<div
+			onClick={() => {
+				context.setShowDropDown(false);
+			}}
+			className='viewproduct'
+		>
 			<select
 				onChange={(e) => {
 					setLoading(true);

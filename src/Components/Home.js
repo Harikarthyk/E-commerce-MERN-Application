@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Loader from 'react-loader-spinner';
-import { Link } from 'react-router-dom';
-import { fetchAllCategories } from '../helper/categories';
+import {Link} from 'react-router-dom';
+import UserContext from '../context/UserContext';
+import {fetchAllCategories} from '../helper/categories';
 import Coverphoto from './Coverphoto';
 import './Home.css';
 
 function Home() {
 	const [categories, setCategories] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const context = useContext(UserContext);
 	useEffect(() => {
 		fetchAllCategories()
 			.then((result) => {
@@ -22,33 +24,38 @@ function Home() {
 	});
 
 	return (
-		<div className="home">
+		<div
+			className='home'
+			onClick={() => {
+				context.setShowDropDown(false);
+			}}
+		>
 			<Coverphoto />
-			<div className="home__description">Get FLAT 50% OFF on all our merch</div>
+			<div className='home__description'>Get FLAT 50% OFF on all our merch</div>
 			{/* Category Display */}
-			<div className="home__heading">Collections</div>
+			<div className='home__heading'>Collections</div>
 
-			<div className="home__category">
+			<div className='home__category'>
 				{categories.map((category) => {
 					return (
 						<Link
-							style={{ color: 'black' }}
+							style={{color: 'black'}}
 							to={`/category/${category._id}`}
-							className="home__category__wrapper"
+							className='home__category__wrapper'
 							key={category._id}
 						>
-							<div className="home__category__wrapper__title">
+							<div className='home__category__wrapper__title'>
 								{category.name}
 							</div>
-							<div className="home__category__wrapper__body">
+							<div className='home__category__wrapper__body'>
 								<img src={category.link} alt={category.name} />
 							</div>
 						</Link>
 					);
 				})}
 				{loading ? (
-					<div className="loading">
-						<Loader type="Oval" color="#00BFFF" height={50} width={50} />
+					<div className='loading'>
+						<Loader type='Oval' color='#00BFFF' height={50} width={50} />
 					</div>
 				) : (
 					''

@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { FaLock, FaTrash } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import React, {useContext, useEffect, useState} from 'react';
+import {FaLock, FaTrash} from 'react-icons/fa';
+import {Link} from 'react-router-dom';
 import UserContext from '../context/UserContext';
 import './CheckOut.css';
 function CheckOut() {
@@ -21,12 +21,12 @@ function CheckOut() {
 	}, []);
 	const API = 'https://e-commerce-clothings.herokuapp.com/api';
 
-	const ImageHelper = ({ product }) => {
+	const ImageHelper = ({product}) => {
 		const imageurl = product
 			? `${API}/product/photo/${product.product}`
 			: `https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940`;
 		return (
-			<div className="checkout__img__wrapper">
+			<div className='checkout__img__wrapper'>
 				<img src={imageurl} alt={product._id} />
 			</div>
 		);
@@ -38,20 +38,25 @@ function CheckOut() {
 		localStorage.setItem('cart', JSON.stringify(newCart));
 	};
 	return (
-		<div className="checkout">
-			<div className="checkout__header">
-				<div className="checkout__title">Shopping Cart</div>
-				<Link to="/" className="checkout__back">
+		<div
+			className='checkout'
+			onClick={() => {
+				context.setShowDropDown(false);
+			}}
+		>
+			<div className='checkout__header'>
+				<div className='checkout__title'>Shopping Cart</div>
+				<Link to='/' className='checkout__back'>
 					Continue Shopping
 				</Link>
 			</div>
-			<div className="checkout__body">
-				<div className="checkout__body__title">Order Summary</div>
+			<div className='checkout__body'>
+				<div className='checkout__body__title'>Order Summary</div>
 
-				<div className="checkout__body__wrapper">
-					<div className="checkout__body__leftside">
+				<div className='checkout__body__wrapper'>
+					<div className='checkout__body__leftside'>
 						{cart.length === 0 ? (
-							<div className="checkout__body__leftside__empty">
+							<div className='checkout__body__leftside__empty'>
 								Your Cart is empty : (
 							</div>
 						) : (
@@ -59,21 +64,21 @@ function CheckOut() {
 						)}
 						{cart.map((c, index) => {
 							return (
-								<div key={c._id} className="checkout__body__cartitem">
+								<div key={c._id} className='checkout__body__cartitem'>
 									<ImageHelper product={c} />
-									<div className="checkout__body__cartitem__subtab">
-										<div className="checkout__body__cartitem__name">
+									<div className='checkout__body__cartitem__subtab'>
+										<div className='checkout__body__cartitem__name'>
 											{c.name}
 										</div>
-										<div className="checkout__body__cartitem__price">
+										<div className='checkout__body__cartitem__price'>
 											Rs. <b>{c.price}</b>
 										</div>
-										<div className="checkout__body__cartitem__count">
+										<div className='checkout__body__cartitem__count'>
 											Count <b>{c.count}</b>
 										</div>
 										<div
 											onClick={() => handleClick(c)}
-											className="checkout__body__cartitem__delete"
+											className='checkout__body__cartitem__delete'
 										>
 											<FaTrash />
 										</div>
@@ -83,15 +88,15 @@ function CheckOut() {
 						})}
 					</div>
 					{cart.length >= 1 ? (
-						<div className="checkout__cartitem__rightside">
-							<div className="checkout__cartitem__total">
+						<div className='checkout__cartitem__rightside'>
+							<div className='checkout__cartitem__total'>
 								Your Cart Total Rs. {total}
 							</div>
 							<Link
-								to="/checkout/buy"
-								className="checkout__cartitem__total__button"
+								to='/checkout/buy'
+								className='checkout__cartitem__total__button'
 							>
-								<FaLock style={{ marginRight: '10px' }} /> Proceed to checkout
+								<FaLock style={{marginRight: '10px'}} /> Proceed to checkout
 							</Link>
 						</div>
 					) : (

@@ -1,24 +1,26 @@
-import React, {useEffect, useState} from "react";
-import {FaPlusCircle} from "react-icons/fa";
-import Loader from "react-loader-spinner";
-import {isAuthenticated} from "../helper/auth";
-import {fetchAllCategories} from "../helper/categories";
-import {addProduct} from "../helper/product";
+import React, {useContext, useEffect, useState} from 'react';
+import {FaPlusCircle} from 'react-icons/fa';
+import Loader from 'react-loader-spinner';
+import UserContext from '../context/UserContext';
+import {isAuthenticated} from '../helper/auth';
+import {fetchAllCategories} from '../helper/categories';
+import {addProduct} from '../helper/product';
 
 function AddProduct() {
 	const [size, setSize] = useState([]);
 	const [input, setInput] = useState({
-		name: "",
+		name: '',
 		category: 0,
-		photo: "",
-		stock: "",
-		price: "",
-		description: "",
+		photo: '',
+		stock: '',
+		price: '',
+		description: '',
 	});
+	const context = useContext(UserContext);
 	const [categories, setCategories] = useState([]);
 	const [output, setOutput] = useState({
 		error: false,
-		message: "",
+		message: '',
 	});
 	const [loading, setLoading] = useState(false);
 	useEffect(() => {
@@ -35,17 +37,17 @@ function AddProduct() {
 	const handleClick = () => {
 		let formData = new FormData();
 		if (input.category === 0) {
-			alert("Select Category");
+			alert('Select Category');
 			return;
 		}
 		setLoading(true);
-		formData.set("name", input.name);
-		formData.set("category", input.category);
-		formData.set("photo", input.photo);
-		formData.set("stock", input.stock);
-		formData.set("price", input.price);
-		formData.set("size", size);
-		formData.set("description", input.description);
+		formData.set('name', input.name);
+		formData.set('category', input.category);
+		formData.set('photo', input.photo);
+		formData.set('stock', input.stock);
+		formData.set('price', input.price);
+		formData.set('size', size);
+		formData.set('description', input.description);
 		let {user, token} = isAuthenticated();
 		addProduct(formData, token, user._id).then((result) => {
 			if (!result || result.error) {
@@ -56,49 +58,54 @@ function AddProduct() {
 			setOutput({...output, error: false, message: result.message});
 			setInput({
 				...input,
-				name: "",
-				photo: "",
-				stock: "",
-				price: "",
-				description: "",
+				name: '',
+				photo: '',
+				stock: '',
+				price: '',
+				description: '',
 			});
 			setLoading(false);
 		});
 	};
 	const showResult = () => {
 		return (
-			<div className="result">
+			<div className='result'>
 				{output.message.length > 0 ? (
 					<div
-						className="result__message"
+						className='result__message'
 						style={
 							output.error
-								? {backgroundColor: "#ea6c6c"}
-								: {backgroundColor: "#8bc34a"}
+								? {backgroundColor: '#ea6c6c'}
+								: {backgroundColor: '#8bc34a'}
 						}
 					>
 						{output.message}
 					</div>
 				) : (
-					""
+					''
 				)}
 			</div>
 		);
 	};
 	return (
-		<div className="adminproduct">
-			<div className="addcategory__field">
-				<div className="addcategory__field__label">Product Name </div>
+		<div
+			onClick={() => {
+				context.setShowDropDown(false);
+			}}
+			className='adminproduct'
+		>
+			<div className='addcategory__field'>
+				<div className='addcategory__field__label'>Product Name </div>
 				<input
-					type="text"
+					type='text'
 					onChange={(e) => {
 						setInput({...input, name: e.target.value});
 					}}
 					value={input.name}
 				/>
 			</div>
-			<div className="addcategory__field">
-				<div className="addcategory__field__label">Select Category</div>
+			<div className='addcategory__field'>
+				<div className='addcategory__field__label'>Select Category</div>
 				<select
 					onChange={(e) => {
 						setInput({...input, category: e.target.value});
@@ -114,53 +121,53 @@ function AddProduct() {
 					})}
 				</select>
 			</div>
-			<div className="addcategory__field">
+			<div className='addcategory__field'>
 				<input
 					onChange={(e) => setInput({...input, photo: e.target.files[0]})}
-					type="file"
-					accept="image"
-					placeholder="choose a file"
+					type='file'
+					accept='image'
+					placeholder='choose a file'
 				/>
 			</div>
-			<div className="addcategory__field">
-				<div className="addcategory__field__label">Stock </div>
+			<div className='addcategory__field'>
+				<div className='addcategory__field__label'>Stock </div>
 				<input
 					onChange={(e) => setInput({...input, stock: e.target.value})}
-					type="number"
+					type='number'
 					value={input.stock}
 				/>
 			</div>
-			<div className="addcategory__field">
-				<div className="addcategory__field__label">Price </div>
+			<div className='addcategory__field'>
+				<div className='addcategory__field__label'>Price </div>
 				<input
 					onChange={(e) => setInput({...input, price: e.target.value})}
-					type="number"
+					type='number'
 					value={input.price}
 				/>
 			</div>
-			<div className="viewparticularproduct__sizes">
+			<div className='viewparticularproduct__sizes'>
 				Sizes
 				<div
-					className="viewparticularproduct__sizes__label"
+					className='viewparticularproduct__sizes__label'
 					style={
-						size.includes("S")
+						size.includes('S')
 							? {
-									color: "white",
-									background: "#131921",
-									fontWeight: "bolder",
-									boxShadow: "-4px -1px 20px 0px",
+									color: 'white',
+									background: '#131921',
+									fontWeight: 'bolder',
+									boxShadow: '-4px -1px 20px 0px',
 							  }
 							: {
-									background: "white",
+									background: 'white',
 							  }
 					}
 					onClick={() => {
-						if (size.includes("S")) {
-							let newSize = size.filter((s) => s !== "S");
+						if (size.includes('S')) {
+							let newSize = size.filter((s) => s !== 'S');
 							setSize(newSize);
 						} else {
 							let newSize = size;
-							newSize.push("S");
+							newSize.push('S');
 							setSize(newSize);
 						}
 					}}
@@ -168,26 +175,26 @@ function AddProduct() {
 					S
 				</div>
 				<div
-					className="viewparticularproduct__sizes__label"
+					className='viewparticularproduct__sizes__label'
 					style={
-						size.includes("M")
+						size.includes('M')
 							? {
-									color: "white",
-									background: "#131921",
-									fontWeight: "bolder",
-									boxShadow: "-4px -1px 20px 0px",
+									color: 'white',
+									background: '#131921',
+									fontWeight: 'bolder',
+									boxShadow: '-4px -1px 20px 0px',
 							  }
 							: {
-									background: "white",
+									background: 'white',
 							  }
 					}
 					onClick={() => {
-						if (size.includes("M")) {
-							let newSize = size.filter((s) => s !== "M");
+						if (size.includes('M')) {
+							let newSize = size.filter((s) => s !== 'M');
 							setSize(newSize);
 						} else {
 							let newSize = size;
-							newSize.push("M");
+							newSize.push('M');
 							setSize(newSize);
 						}
 					}}
@@ -195,26 +202,26 @@ function AddProduct() {
 					M
 				</div>
 				<div
-					className="viewparticularproduct__sizes__label"
+					className='viewparticularproduct__sizes__label'
 					style={
-						size.includes("L")
+						size.includes('L')
 							? {
-									color: "white",
-									background: "#131921",
-									fontWeight: "bolder",
-									boxShadow: "-4px -1px 20px 0px",
+									color: 'white',
+									background: '#131921',
+									fontWeight: 'bolder',
+									boxShadow: '-4px -1px 20px 0px',
 							  }
 							: {
-									background: "white",
+									background: 'white',
 							  }
 					}
 					onClick={() => {
-						if (size.includes("L")) {
-							let newSize = size.filter((s) => s !== "L");
+						if (size.includes('L')) {
+							let newSize = size.filter((s) => s !== 'L');
 							setSize(newSize);
 						} else {
 							let newSize = size;
-							newSize.push("L");
+							newSize.push('L');
 							setSize(newSize);
 						}
 					}}
@@ -222,8 +229,8 @@ function AddProduct() {
 					L
 				</div>
 			</div>
-			<div className="addcategory__field">
-				<div className="addcategory__field__label">Description </div>
+			<div className='addcategory__field'>
+				<div className='addcategory__field__label'>Description </div>
 				<textarea
 					onChange={(e) => setInput({...input, description: e.target.value})}
 					value={input.description}
@@ -231,23 +238,23 @@ function AddProduct() {
 			</div>
 			{showResult()}
 			{loading ? (
-				<div className="loading">
-					<Loader type="Oval" color="#00BFFF" height={50} width={50} />
+				<div className='loading'>
+					<Loader type='Oval' color='#00BFFF' height={50} width={50} />
 				</div>
 			) : (
-				""
+				''
 			)}
 			{loading ? (
-				<div className="loading">
-					<Loader type="Oval" color="#00BFFF" height={50} width={50} />
+				<div className='loading'>
+					<Loader type='Oval' color='#00BFFF' height={50} width={50} />
 				</div>
 			) : (
-				""
+				''
 			)}
-			<div className="addcategory__submit">
+			<div className='addcategory__submit'>
 				<button
 					onClick={() => handleClick()}
-					className="addcategory__submitbtn"
+					className='addcategory__submitbtn'
 				>
 					<FaPlusCircle />
 				</button>

@@ -1,36 +1,38 @@
-import React, {useEffect, useState} from "react";
-import Loader from "react-loader-spinner";
-import {Redirect} from "react-router-dom";
-import {getOTP, savePasswordtoDB} from "../helper/auth";
-import "./ForgotPassword.css";
+import React, {useContext, useEffect, useState} from 'react';
+import Loader from 'react-loader-spinner';
+import {Redirect} from 'react-router-dom';
+import UserContext from '../context/UserContext';
+import {getOTP, savePasswordtoDB} from '../helper/auth';
+import './ForgotPassword.css';
 function ForgotPassword() {
 	const [redirect, setRedirect] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [showOtp, setShowOtp] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
-	const [password, setPassword] = useState("");
-	const [ipOTP, setIpOTP] = useState("");
-	const [crtOPT, setCrtOTP] = useState("");
+	const [password, setPassword] = useState('');
+	const [ipOTP, setIpOTP] = useState('');
+	const [crtOPT, setCrtOTP] = useState('');
 	useEffect(() => {
-		if (localStorage.getItem("user")) {
+		if (localStorage.getItem('user')) {
 			setRedirect(true);
 		}
 	}, []);
 	const [output, setOutput] = useState({
 		error: false,
-		message: "",
+		message: '',
 	});
 	const verifyOTP = (e) => {
 		e.preventDefault();
 		if (ipOTP !== crtOPT) {
-			setOutput({...output, message: "Wrong OTP", error: true});
+			setOutput({...output, message: 'Wrong OTP', error: true});
 			setShowPassword(false);
 		} else {
 			setShowPassword(true);
-			setOutput({...output, message: "OTP Matched", error: false});
+			setOutput({...output, message: 'OTP Matched', error: false});
 		}
 	};
-	const [email, setEmail] = useState("");
+	const context = useContext(UserContext);
+	const [email, setEmail] = useState('');
 	const handleClickOTP = (e) => {
 		e.preventDefault();
 		setLoading(true);
@@ -50,20 +52,20 @@ function ForgotPassword() {
 	};
 	const showResult = () => {
 		return (
-			<div className="result">
+			<div className='result'>
 				{output.message.length > 0 ? (
 					<div
-						className="result__message"
+						className='result__message'
 						style={
 							output.error
-								? {backgroundColor: "#ea6c6c"}
-								: {backgroundColor: "#8bc34a"}
+								? {backgroundColor: '#ea6c6c'}
+								: {backgroundColor: '#8bc34a'}
 						}
 					>
 						{output.message}
 					</div>
 				) : (
-					""
+					''
 				)}
 			</div>
 		);
@@ -72,8 +74,8 @@ function ForgotPassword() {
 		e.preventDefault();
 		setLoading(true);
 		let ip = {};
-		ip["email"] = email;
-		ip["password"] = password;
+		ip['email'] = email;
+		ip['password'] = password;
 		savePasswordtoDB(ip)
 			.then((result) => {
 				if (result.error) {
@@ -87,54 +89,59 @@ function ForgotPassword() {
 			})
 			.catch((error) => console.error(error));
 	};
-	if (redirect) return <Redirect to="/" />;
+	if (redirect) return <Redirect to='/' />;
 	return (
-		<div className="forgotpassword">
-			<div className="forgotpassword__title">Forgot Password</div>
+		<div
+			onClick={() => {
+				context.setShowDropDown(false);
+			}}
+			className='forgotpassword'
+		>
+			<div className='forgotpassword__title'>Forgot Password</div>
 			{showResult()}
 			{loading ? (
-				<div className="loading">
-					<Loader type="Oval" color="#00BFFF" height={50} width={50} />
+				<div className='loading'>
+					<Loader type='Oval' color='#00BFFF' height={50} width={50} />
 				</div>
 			) : (
-				""
+				''
 			)}
 			<form>
 				<div
-					className="addcategory__field"
+					className='addcategory__field'
 					style={{
-						width: "-webkit-fill-available",
+						width: '-webkit-fill-available',
 					}}
 				>
-					<div className="addcategory__field__label"> Enter your email </div>
+					<div className='addcategory__field__label'> Enter your email </div>
 					<input
-						type="email"
+						type='email'
 						value={email}
 						required={true}
 						onChange={(e) => setEmail(e.target.value)}
 					/>
 				</div>
 				{!showOtp ? (
-					<button type="submit" onClick={(e) => handleClickOTP(e)}>
+					<button type='submit' onClick={(e) => handleClickOTP(e)}>
 						GET OTP
 					</button>
 				) : (
 					<>
 						<div
-							className="addcategory__field"
+							className='addcategory__field'
 							style={{
-								width: "-webkit-fill-available",
+								width: '-webkit-fill-available',
 							}}
 						>
-							<div className="addcategory__field__label"> Enter the OTP </div>
+							<div className='addcategory__field__label'> Enter the OTP </div>
 							<input
-								type="text"
+								type='text'
 								value={ipOTP}
 								required={true}
 								onChange={(e) => setIpOTP(e.target.value)}
 							/>
 						</div>
-						<button type="submit" onClick={(e) => verifyOTP(e)}>
+						<button type='submit' onClick={(e) => verifyOTP(e)}>
 							Verify OTP
 						</button>
 					</>
@@ -142,28 +149,28 @@ function ForgotPassword() {
 				{showPassword ? (
 					<>
 						<div
-							className="addcategory__field"
+							className='addcategory__field'
 							style={{
-								width: "-webkit-fill-available",
+								width: '-webkit-fill-available',
 							}}
 						>
-							<div className="addcategory__field__label">
-								{" "}
-								Enter your new Password{" "}
+							<div className='addcategory__field__label'>
+								{' '}
+								Enter your new Password{' '}
 							</div>
 							<input
-								type="password"
+								type='password'
 								value={password}
 								required={true}
 								onChange={(e) => setPassword(e.target.value)}
 							/>
 						</div>
-						<button type="submit" onClick={(e) => saveNewPassword(e)}>
+						<button type='submit' onClick={(e) => saveNewPassword(e)}>
 							Save Password
 						</button>
 					</>
 				) : (
-					""
+					''
 				)}
 			</form>
 		</div>

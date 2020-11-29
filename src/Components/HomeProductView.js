@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { getEachProduct } from '../helper/product';
-import { getEachCategoryDetails } from '../helper/categories';
+import React, {useContext, useEffect, useState} from 'react';
+import {getEachProduct} from '../helper/product';
+import {getEachCategoryDetails} from '../helper/categories';
 import './HomeProductView.css';
-import { Link, useHistory } from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import Loader from 'react-loader-spinner';
+import UserContext from '../context/UserContext';
 
 function HomeProductView() {
 	const history = useHistory();
 	const [products, setProducts] = useState([]);
 	const [category, setCategory] = useState('');
 	const [loading, setLoading] = useState(true);
+	const context = useContext(UserContext)
 	useEffect(() => {
 		let categoryId = history.location.pathname.split('/')[2];
 		getEachCategoryDetails(categoryId).then((res) => {
@@ -33,21 +35,26 @@ function HomeProductView() {
 	}, [history.location.pathname]);
 	const API = 'https://e-commerce-clothings.herokuapp.com/api';
 
-	const ImageHelper = ({ product }) => {
+	const ImageHelper = ({product}) => {
 		const imageurl = product
 			? `${API}/product/photo/${product._id}`
 			: `https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940`;
 		return (
-			<div className="homeproduct__img__wrapper">
+			<div className='homeproduct__img__wrapper'>
 				<img src={imageurl} alt={product._id} />
 			</div>
 		);
 	};
 	return (
-		<div className="homeproductview">
-			<div className="homeproductview__title">
+		<div
+			onClick={() => {
+				context.setShowDropDown(false);
+			}}
+			className='homeproductview'
+		>
+			<div className='homeproductview__title'>
 				<Link
-					to="/"
+					to='/'
 					style={{
 						marginRight: ' 10px',
 						textDecoration: 'none !important',
@@ -65,43 +72,43 @@ function HomeProductView() {
 				{category.name}
 			</div>
 			{loading ? (
-				<div className="loading">
-					<Loader type="Oval" color="#00BFFF" height={50} width={50} />
+				<div className='loading'>
+					<Loader type='Oval' color='#00BFFF' height={50} width={50} />
 				</div>
 			) : (
 				''
 			)}
 			{products.length === 0 && !loading ? (
-				<div className="homeproductview__body__noproduct">
+				<div className='homeproductview__body__noproduct'>
 					Product List Is Empty In This Category : (
 				</div>
 			) : (
 				''
 			)}
-			<div className="homeproductview__body">
+			<div className='homeproductview__body'>
 				{products.map((product) => {
 					return (
 						<Link
 							key={product._id}
 							to={`/product/${product._id}`}
-							className="homeproductview__body__product"
+							className='homeproductview__body__product'
 						>
 							<div
-								className="homeproduct__body__product__tag"
+								className='homeproduct__body__product__tag'
 								style={
 									product.stock === 0
-										? { backgroundColor: 'red ' }
-										: { backgroundColor: '#131921' }
+										? {backgroundColor: 'red '}
+										: {backgroundColor: '#131921'}
 								}
 							>
 								{product.stock === 0 ? 'OUT OF STOCK' : '50% OFF'}
 							</div>
 							<ImageHelper product={product} />
-							<div className="homeproductview__body__product__title">
+							<div className='homeproductview__body__product__title'>
 								{product.name}
 							</div>
-							<div className="homeproductview__body__product__stock">
-								<span className="homeproductview__body__product__stock__span">
+							<div className='homeproductview__body__product__stock'>
+								<span className='homeproductview__body__product__stock__span'>
 									Rs.{Number(product.price) * 2}
 								</span>
 								<b>Rs. {product.price}</b>

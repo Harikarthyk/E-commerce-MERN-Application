@@ -13,6 +13,7 @@ function AddCategory() {
 		error: false,
 		message: '',
 	});
+
 	const [loading, setLoading] = useState(false);
 	const context = useContext(UserContext);
 	const handleClick = () => {
@@ -49,7 +50,12 @@ function AddCategory() {
 		);
 	};
 	return (
-		<div className='addcategory'>
+		<div
+			onClick={() => {
+				context.setShowDropDown(false);
+			}}
+			className='addcategory'
+		>
 			{loading ? (
 				<div className='loading'>
 					<Loader type='Oval' color='#00BFFF' height={50} width={50} />

@@ -1,28 +1,29 @@
-import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
-import Home from "./Components/Home";
-import Login from "./Components/Login";
-import Header from "./Components/Header";
-import CreateAccount from "./Components/CreateAccount";
-import Footer from "./Components/Footer";
-import {useState} from "react";
-import UserContext from "./context/UserContext";
-import Adminpage from "./Components/Adminpage";
-import HomeProductView from "./Components/HomeProductView";
-import ViewParticularProduct from "./Components/ViewParticularProduct";
-import CheckOut from "./Components/CheckOut";
-import BuyPage from "./Components/BuyPage";
-import Order from "./Components/Order";
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-import ForgotPassword from "./Components/ForgotPassword";
-import Settings from "./Components/Settings";
+import Home from './Components/Home';
+import Login from './Components/Login';
+import Header from './Components/Header';
+import CreateAccount from './Components/CreateAccount';
+import Footer from './Components/Footer';
+import {useState} from 'react';
+import UserContext from './context/UserContext';
+import Adminpage from './Components/Adminpage';
+import HomeProductView from './Components/HomeProductView';
+import ViewParticularProduct from './Components/ViewParticularProduct';
+import CheckOut from './Components/CheckOut';
+import BuyPage from './Components/BuyPage';
+import Order from './Components/Order';
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+import ForgotPassword from './Components/ForgotPassword';
+import Settings from './Components/Settings';
 
 function App() {
+	const [showDropDown, setShowDropDown] = useState(false);
 	const [user, setUser] = useState(null);
 	const [token, setToken] = useState(null);
 	const [click, setClick] = useState(false);
 	return (
-		<div className="App">
+		<div className='App'>
 			<BrowserRouter>
 				<Switch>
 					<UserContext.Provider
@@ -33,47 +34,49 @@ function App() {
 							setToken,
 							click,
 							setClick,
+							showDropDown,
+							setShowDropDown,
 						}}
 					>
 						<Header />
-						<Route exact path="/" component={Home} />
-						<Route exact path="/login" component={Login} />
-						<Route exact path="/createAccount" component={CreateAccount} />
-						<Route exact path="/adminpage" component={Adminpage} />
-						<Route exact path="/category/*" component={HomeProductView} />
-						<Route exact path="/product/*" component={ViewParticularProduct} />
-						<Route exact path="/checkout" component={CheckOut} />
-						<Route exact path="/checkout/buy" component={BuyPage} />
-						<Route exact path="/orders/*" component={Order} />
-						<Route exact path="/forgotpassword" component={ForgotPassword} />
-						<Route exact path="/settings" component={Settings} />
+						<Route exact path='/' component={Home} />
+						<Route exact path='/login' component={Login} />
+						<Route exact path='/createAccount' component={CreateAccount} />
+						<Route exact path='/adminpage' component={Adminpage} />
+						<Route exact path='/category/*' component={HomeProductView} />
+						<Route exact path='/product/*' component={ViewParticularProduct} />
+						<Route exact path='/checkout' component={CheckOut} />
+						<Route exact path='/checkout/buy' component={BuyPage} />
+						<Route exact path='/orders/*' component={Order} />
+						<Route exact path='/forgotpassword' component={ForgotPassword} />
+						<Route exact path='/settings' component={Settings} />
 						<Route
-							path="/instagram"
+							path='/instagram'
 							component={() => {
 								window.location.href =
-									"https://www.instagram.com/hari_karthyk/";
+									'https://www.instagram.com/hari_karthyk/';
 								return null;
 							}}
 						/>
 						<Route
-							path="/github"
+							path='/github'
 							component={() => {
-								window.location.href = "https://github.com/Harikarthyk";
+								window.location.href = 'https://github.com/Harikarthyk';
 								return null;
 							}}
 						/>
 						<Route
-							path="/linkedin"
+							path='/linkedin'
 							component={() => {
 								window.location.href =
-									"https://www.linkedin.com/in/hari-karthikkeyyan-116aaa1b3/";
+									'https://www.linkedin.com/in/hari-karthikkeyyan-116aaa1b3/';
 								return null;
 							}}
 						/>
 						<Route
-							path="/facebook"
+							path='/facebook'
 							component={() => {
-								window.location.href = "https://www.facebook.com/hari.karthyk";
+								window.location.href = 'https://www.facebook.com/hari.karthyk';
 								return null;
 							}}
 						/>

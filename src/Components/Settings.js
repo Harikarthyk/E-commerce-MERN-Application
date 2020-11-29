@@ -1,23 +1,25 @@
-import React, {useState} from "react";
-import Loader from "react-loader-spinner";
-import {Link, Redirect} from "react-router-dom";
-import {isAuthenticated, savePasswordtoDB} from "../helper/auth";
-import "./Settings.css";
+import React, {useContext, useState} from 'react';
+import Loader from 'react-loader-spinner';
+import {Link, Redirect} from 'react-router-dom';
+import UserContext from '../context/UserContext';
+import {isAuthenticated, savePasswordtoDB} from '../helper/auth';
+import './Settings.css';
 function Settings() {
 	const {user} = isAuthenticated();
 	const [showChangePassword, setShowChangePassword] = useState(false);
-	const [password, setPassword] = useState("");
+	const [password, setPassword] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [output, setOutput] = useState({
 		error: false,
-		message: "",
+		message: '',
 	});
+	const context = useContext(UserContext);
 	const handleClick = (e) => {
 		e.preventDefault();
 		setLoading(true);
 		let ip = {};
-		ip["email"] = user.email;
-		ip["password"] = password;
+		ip['email'] = user.email;
+		ip['password'] = password;
 		savePasswordtoDB(ip)
 			.then((result) => {
 				if (result.error) {
@@ -32,34 +34,39 @@ function Settings() {
 	};
 	const showResult = () => {
 		return (
-			<div className="result">
+			<div className='result'>
 				{output.message.length > 0 ? (
 					<div
-						className="result__message"
+						className='result__message'
 						style={
 							output.error
-								? {backgroundColor: "#ea6c6c"}
-								: {backgroundColor: "#8bc34a"}
+								? {backgroundColor: '#ea6c6c'}
+								: {backgroundColor: '#8bc34a'}
 						}
 					>
 						{output.message}
 					</div>
 				) : (
-					""
+					''
 				)}
 			</div>
 		);
 	};
-	if (!user) return <Redirect to="/" />;
+	if (!user) return <Redirect to='/' />;
 
 	return (
-		<div className="settings">
-			<div className="settings__header">Welcome {user.name}</div>
-			<div className="settings__body">
-				<div className="settings__tab">
+		<div
+			className='settings'
+			onClick={() => {
+				context.setShowDropDown(false);
+			}}
+		>
+			<div className='settings__header'>Welcome {user.name}</div>
+			<div className='settings__body'>
+				<div className='settings__tab'>
 					<b>Mail :</b> {user.email}
 				</div>
-				<div className="settings__tab">
+				<div className='settings__tab'>
 					<b>Phone Number :</b> {user.phoneNo}
 				</div>
 				<div
@@ -67,26 +74,26 @@ function Settings() {
 						setShowChangePassword(true);
 					}}
 					style={{
-						textDecoration: " underline",
-						cursor: "pointer",
+						textDecoration: ' underline',
+						cursor: 'pointer',
 					}}
-					className="settings__tab"
+					className='settings__tab'
 				>
 					<b>Change Password</b>
 				</div>
 				{showChangePassword ? (
 					<form>
 						<div
-							className="addcategory__field"
+							className='addcategory__field'
 							style={{
-								width: "-webkit-fill-available",
+								width: '-webkit-fill-available',
 							}}
 						>
-							<div className="addcategory__field__label">
+							<div className='addcategory__field__label'>
 								Enter new Password
 							</div>
 							<input
-								type="password"
+								type='password'
 								value={password}
 								required={true}
 								onChange={(e) => setPassword(e.target.value)}
@@ -100,17 +107,17 @@ function Settings() {
 						</button>
 					</form>
 				) : (
-					""
+					''
 				)}
 				{loading ? (
-					<div className="loading">
-						<Loader type="Oval" color="#00BFFF" height={50} width={50} />
+					<div className='loading'>
+						<Loader type='Oval' color='#00BFFF' height={50} width={50} />
 					</div>
 				) : (
-					""
+					''
 				)}
 				{showResult()}
-				<div className="settings__tab">
+				<div className='settings__tab'>
 					<Link to={`/orders/${user._id}`}>View Your Orders</Link>
 				</div>
 			</div>

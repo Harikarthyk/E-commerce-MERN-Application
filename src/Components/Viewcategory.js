@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {FaTrash, FaUpload} from 'react-icons/fa';
 import Loader from 'react-loader-spinner';
+import UserContext from '../context/UserContext';
 import {isAuthenticated} from '../helper/auth';
 import {
 	deleteCategory,
@@ -9,6 +10,7 @@ import {
 } from '../helper/categories';
 
 function Viewcategory() {
+	const context = useContext(UserContext);
 	const [categories, setCategories] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const {user, token} = isAuthenticated();
@@ -63,7 +65,12 @@ function Viewcategory() {
 		});
 	};
 	return (
-		<div className='viewcategory'>
+		<div
+			onClick={() => {
+				context.setShowDropDown(false);
+			}}
+			className='viewcategory'
+		>
 			{loading ? (
 				<div className='loading'>
 					<Loader type='Oval' color='#00BFFF' height={50} width={50} />

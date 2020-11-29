@@ -1,13 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom';
-import { isAuthenticated } from '../helper/auth';
-import { placeOrder } from '../helper/order';
+import React, {useContext, useEffect, useState} from 'react';
+import {Redirect} from 'react-router-dom';
+import {isAuthenticated} from '../helper/auth';
+import {placeOrder} from '../helper/order';
 import Loader from 'react-loader-spinner';
 
 import './BuyPage.css';
 import UserContext from '../context/UserContext';
 function BuyPage() {
-	const { user, token } = isAuthenticated();
+	const {user, token} = isAuthenticated();
 	const context = useContext(UserContext);
 	const [input, setInput] = useState({
 		name: '',
@@ -53,12 +53,12 @@ function BuyPage() {
 		})
 			.then((result) => {
 				if (result.error) {
-					setOutput({ ...output, error: true, message: result.error });
+					setOutput({...output, error: true, message: result.error});
 					console.error(result.error);
 					return;
 				}
 				setRedirect(true);
-				setOutput({ ...output, error: false, message: result.message });
+				setOutput({...output, error: false, message: result.message});
 				setLoading(false);
 				localStorage.setItem('cart', JSON.stringify([]));
 				context.setClick(!context.click);
@@ -67,14 +67,19 @@ function BuyPage() {
 	};
 	const showResult = () => {
 		return (
-			<div className="result">
+			<div
+				onClick={() => {
+					context.setShowDropDown(false);
+				}}
+				className='result'
+			>
 				{output.message.length > 0 ? (
 					<div
-						className="result__message"
+						className='result__message'
 						style={
 							output.error
-								? { backgroundColor: '#ea6c6c' }
-								: { backgroundColor: '#8bc34a' }
+								? {backgroundColor: '#ea6c6c'}
+								: {backgroundColor: '#8bc34a'}
 						}
 					>
 						{output.message}
@@ -86,74 +91,74 @@ function BuyPage() {
 		);
 	};
 	if (redirect) return <Redirect to={`/orders/${user._id}`} />;
-	if (!isAuthenticated()) return <Redirect to="/login" />;
+	if (!isAuthenticated()) return <Redirect to='/login' />;
 
 	return (
-		<div className="buypage">
-			<div className="buypage__header">Fill the details</div>
+		<div className='buypage'>
+			<div className='buypage__header'>Fill the details</div>
 			{showResult()}
-			<div className="buypage__body">
-				<div className="buypage__body__left">
-					<div className="buypage__body__field">
-						<div className="buypage__body__field__label">Name</div>
+			<div className='buypage__body'>
+				<div className='buypage__body__left'>
+					<div className='buypage__body__field'>
+						<div className='buypage__body__field__label'>Name</div>
 						<input
-							type="text"
-							className="buypage__body__field__input"
+							type='text'
+							className='buypage__body__field__input'
 							value={input.name}
 							onChange={(e) => {
-								setInput({ ...input, name: e.target.value });
+								setInput({...input, name: e.target.value});
 							}}
 						/>
 					</div>
-					<div className="buypage__body__field">
-						<div className="buypage__body__field__label">Phone Number</div>
+					<div className='buypage__body__field'>
+						<div className='buypage__body__field__label'>Phone Number</div>
 						<input
-							type="text"
+							type='text'
 							value={input.phoneNo}
-							className="buypage__body__field__input"
+							className='buypage__body__field__input'
 							onChange={(e) => {
-								setInput({ ...input, phoneNo: e.target.value });
+								setInput({...input, phoneNo: e.target.value});
 							}}
 						/>
 					</div>
-					<div className="buypage__body__field__note">
+					<div className='buypage__body__field__note'>
 						Note : Only Applicable in Coimbatore, TamilNadu , India
 					</div>
-					<div className="buypage__body__field">
-						<div className="buypage__body__field__label">Street</div>
+					<div className='buypage__body__field'>
+						<div className='buypage__body__field__label'>Street</div>
 						<textarea
-							className="buypage__body__field__textarea"
+							className='buypage__body__field__textarea'
 							value={input.street}
 							onChange={(e) => {
-								setInput({ ...input, street: e.target.value });
+								setInput({...input, street: e.target.value});
 							}}
 						/>
 					</div>
-					<div className="buypage__body__field">
-						<div className="buypage__body__field__label">Pincode</div>
+					<div className='buypage__body__field'>
+						<div className='buypage__body__field__label'>Pincode</div>
 						<input
-							className="buypage__body__field__input"
+							className='buypage__body__field__input'
 							value={input.pincode}
-							type="text"
+							type='text'
 							onChange={(e) => {
-								setInput({ ...input, pincode: e.target.value });
+								setInput({...input, pincode: e.target.value});
 							}}
 						/>
 					</div>
-					<div className="buypage__body__field__note">
+					<div className='buypage__body__field__note'>
 						Cash on Delivery (COD) is only Available
 					</div>
 				</div>
 				{loading ? (
-					<div className="loading">
-						<Loader type="Oval" color="#00BFFF" height={50} width={50} />
+					<div className='loading'>
+						<Loader type='Oval' color='#00BFFF' height={50} width={50} />
 					</div>
 				) : (
 					''
 				)}
 
-				<div className="buypage__body__right">
-					<div className="buypage__body__total">
+				<div className='buypage__body__right'>
+					<div className='buypage__body__total'>
 						Total Amount Rs.{input.total}
 					</div>
 					<button
@@ -165,7 +170,7 @@ function BuyPage() {
 							!input.pincode ||
 							!input.phoneNo
 						}
-						className="buypage__body__right"
+						className='buypage__body__right'
 						onClick={() => handleClick()}
 					>
 						Place Order
