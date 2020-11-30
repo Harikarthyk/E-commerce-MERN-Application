@@ -26,6 +26,19 @@ function ViewAllOrders() {
 			})
 			.catch((error) => console.error(error));
 	};
+	const API = 'https://e-commerce-clothings.herokuapp.com/api';
+
+	const ImageHelper = ({product}) => {
+		console.log(product);
+		const imageurl = product
+			? `${API}/product/photo/${product._id}`
+			: `https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940`;
+		return (
+			<div className='viewallorder__img__wrapper'>
+				<img src={imageurl} alt={product._id} />
+			</div>
+		);
+	};
 	const handleClick = (orderId) => {
 		updateOrderStatus(user._id, orderId, token)
 			.then((result) => {
@@ -67,24 +80,30 @@ function ViewAllOrders() {
 										return (
 											<div
 												key={pro._id}
-												className='viewallorders__order__item__products__product'
+												className='viewallorders__order__item__products__product__main'
 											>
-												<div className='viewallorders__order__item__products__product__name'>
-													{' '}
-													{pro.product?.name}
+												<div className='viewallorders__order__item__product__img'>
+													<ImageHelper product={pro.product} />
 												</div>
-												<div className='viewallorders__order__item__products__product__size'>
-													Size : {pro.size}
-												</div>
-												<div className='viewallorders__order__item__products__product__count'>
-													Count : {pro.count}
+												<div className='viewallorders__order__item__products__product'>
+													<div className='viewallorders__order__item__products__product__name'>
+														{pro.product?.name}
+													</div>
+													<div className='viewallorders__order__item__products__product__size'>
+														Size : {pro.size}
+													</div>
+													<div className='viewallorders__order__item__products__product__count'>
+														Count : {pro.count}
+													</div>
 												</div>
 											</div>
-											// console.log(pro)
 										);
 									})}
 								</div>{' '}
-								<div className='order__body__order__product__total'>
+								<div
+									style={{color: 'white', background: '#131921'}}
+									className='order__body__order__product__total'
+								>
 									Total : Rs.{order.total}
 								</div>
 								<div
