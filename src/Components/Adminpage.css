@@ -319,4 +319,7 @@ button.addcategory__submitbtn {
 	.viewallorders__order__item__products__product__name {
 		margin-bottom: 14px;
 	}
+	.viewallorders__order__item__title {
+		font-size: 12px;
+	}
 }

@@ -17,7 +17,6 @@
 	padding: 10px;
 	border-bottom: 1px solid;
 	font-size: xx-large;
-	font-variant-caps: petite-caps;
 	font-weight: 900;
 }
 .home__category__wrapper {
@@ -42,7 +41,6 @@
 .home__category__wrapper__title {
 	font-size: 28px;
 
-	font-variant-caps: petite-caps;
 	font-weight: bold;
 	border-bottom: 1px solid grey;
 	padding-bottom: 10px;

@@ -29,7 +29,6 @@ function ViewAllOrders() {
 	const API = 'https://e-commerce-clothings.herokuapp.com/api';
 
 	const ImageHelper = ({product}) => {
-		console.log(product);
 		const imageurl = product
 			? `${API}/product/photo/${product._id}`
 			: `https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940`;
@@ -72,6 +71,7 @@ function ViewAllOrders() {
 								<div className='viewallorders__order__item__phone'>
 									Phone Number : {order.phoneNo}
 								</div>
+								<b> Shipping Address : </b>
 								<div className='viewallorders__order__item__address'>
 									{order.street},{order.district},{order.state}.
 								</div>
