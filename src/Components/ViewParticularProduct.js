@@ -32,7 +32,6 @@ function ViewParticularProduct() {
 				} else {
 					setAvailableSize(result.product.size);
 				}
-				setLoading(false);
 				let oldCart = JSON.parse(localStorage.getItem('cart'));
 				setCart(oldCart);
 				setProduct(result.product);
@@ -41,12 +40,12 @@ function ViewParticularProduct() {
 					.then((r) => {
 						let similar_product = r.products.filter((p) => p._id !== productId);
 						setSimilarProduct(similar_product);
-						// console.log(similar_product);
 					})
 					.catch((error) => console.error(error));
+				setLoading(false);
 			})
 			.catch((error) => console.error(error));
-	}, [context.setShowDropDown, context.showDropDown]);
+	}, [history.location.pathname]);
 	const showDescription = (str) => {
 		let arr = JSON.parse(str).split(/\r\n|\r|\n/);
 		return arr.map((a, index) => {
@@ -245,9 +244,12 @@ function ViewParticularProduct() {
 					{similarProduct.map((similarproduct) => {
 						return (
 							<Link
-								to='as'
+								to={`/product/${similarproduct._id}`}
 								className='similar__product'
 								key={similarproduct._id}
+								style={{
+									color: 'black',
+								}}
 							>
 								<ImageHelper2 product={similarproduct} />
 								<div className='viewparticularproduct__similar__products__product__name'>
