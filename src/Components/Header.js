@@ -1,44 +1,19 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {FaSearch, FaShoppingBasket, FaUserCog} from 'react-icons/fa';
-import {Link, Redirect, useHistory} from 'react-router-dom';
+import {FaShoppingBasket, FaUserCog} from 'react-icons/fa';
+import {Link} from 'react-router-dom';
 import UserContext from '../context/UserContext';
 import {isAuthenticated} from '../helper/auth';
 import {logout} from '../helper/logout';
-import {getAllProducts} from '../helper/product';
 import './Header.css';
 
 function Navbar() {
 	const context = useContext(UserContext);
 	const [cart, setCart] = useState(0);
-	const {user, setUser, showDropDown, setShowDropDown} = context;
-	const [products, setProducts] = useState([]);
-	const [input, setInput] = useState('');
-	const history = useHistory();
-	const [predication, setPrediction] = useState([]);
+	const {user, setUser} = context;
 	useEffect(() => {
 		updateCart();
 	}, [context.setClick, context.click]);
-	useEffect(() => {
-		getAllProducts()
-			.then((result) => {
-				if (result.error) {
-					console.error(result.error);
-					return;
-				}
-				setProducts(result.products);
-			})
-			.catch((error) => console.error(error));
-	});
-	const predictOutput = (s) => {
-		let op = products.filter((p) => {
-			let name = p.name;
-			name = name.toLowerCase();
-			s = s.toLowerCase();
-			return name.includes(s);
-		});
-		if (op.length >= 10) op.length = 10;
-		setPrediction(op);
-	};
+
 	const updateCart = () => {
 		if (!localStorage.getItem('cart')) {
 			let temp = [];
@@ -71,30 +46,11 @@ function Navbar() {
 			<div className='header'>
 				<Link to='/'>
 					<img
-						src='https://pngimg.com/uploads/amazon/amazon_PNG11.png'
+						src='https://user-images.githubusercontent.com/54505967/101191949-5aae0580-3680-11eb-81c1-90f0778a741b.png'
 						alt='amazon_logo'
 						className='header__logo'
 					/>
 				</Link>
-				<div className='header__search'>
-					<div className='header__search__left'>
-						<input
-							value={input}
-							onChange={(e) => {
-								setShowDropDown(true);
-								setInput(e.target.value);
-								predictOutput(input);
-							}}
-							onKeyUp={() => setShowDropDown(true)}
-							className='header__searchInput'
-							type='text'
-						/>
-						<div className='header__searchIconDiv'>
-							<FaSearch className='header__searchIcon' />
-						</div>
-					</div>
-				</div>
-
 				<div className='header__Nav'>
 					<div className='header__link'>
 						<div className='header__option'>
@@ -168,31 +124,6 @@ function Navbar() {
 					</Link>
 				</div>
 			</div>
-			{input.length >= 1 && showDropDown ? (
-				<div className='header__search__predicition'>
-					{predication.length >= 1 ? (
-						predication.map((p) => (
-							<div
-								onClick={() => {
-									setShowDropDown(false);
-									setInput(p.name);
-									history.push(`/product/${p._id}`);
-								}}
-								className='header__search__prediction__field'
-								key={p._id}
-							>
-								{p.name}
-							</div>
-						))
-					) : (
-						<div className='header__search__prediction__field'>
-							<i>No result found</i>
-						</div>
-					)}
-				</div>
-			) : (
-				''
-			)}
 		</div>
 	);
 }

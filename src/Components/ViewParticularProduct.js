@@ -3,7 +3,7 @@ import {FaShoppingCart} from 'react-icons/fa';
 import Loader from 'react-loader-spinner';
 import {Link, useHistory} from 'react-router-dom';
 import UserContext from '../context/UserContext';
-import {getProductByProductId} from '../helper/product';
+import {getEachProduct, getProductByProductId} from '../helper/product';
 import './ViewParticularProduct.css';
 
 function ViewParticularProduct() {
@@ -15,6 +15,7 @@ function ViewParticularProduct() {
 	const [size, setSize] = useState('');
 	const [availableSize, setAvailableSize] = useState([]);
 	const [cart, setCart] = useState([]);
+	const [similarProduct, setSimilarProduct] = useState([]);
 	useEffect(() => {
 		setLoading(true);
 		let productId = history.location.pathname.split('/')[2];
@@ -35,6 +36,14 @@ function ViewParticularProduct() {
 				let oldCart = JSON.parse(localStorage.getItem('cart'));
 				setCart(oldCart);
 				setProduct(result.product);
+
+				getEachProduct(result.product.category._id)
+					.then((r) => {
+						let similar_product = r.products.filter((p) => p._id !== productId);
+						setSimilarProduct(similar_product);
+						// console.log(similar_product);
+					})
+					.catch((error) => console.error(error));
 			})
 			.catch((error) => console.error(error));
 	}, [context.setShowDropDown, context.showDropDown]);
@@ -56,6 +65,16 @@ function ViewParticularProduct() {
 			: `https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940`;
 		return (
 			<div className='viewparticularproduct__img__wrapper'>
+				<img src={imageurl} alt={product._id} />
+			</div>
+		);
+	};
+	const ImageHelper2 = ({product}) => {
+		const imageurl = product
+			? `${API}/product/photo/${product._id}`
+			: `https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940`;
+		return (
+			<div className='similar__img__wrapper'>
 				<img src={imageurl} alt={product._id} />
 			</div>
 		);
@@ -88,6 +107,13 @@ function ViewParticularProduct() {
 		}
 		setCart(newCart);
 		localStorage.setItem('cart', JSON.stringify(newCart));
+	};
+	const shortNames = (s) => {
+		let temp = s.split(' ');
+		let result = '';
+		let i = 1;
+		while (i < temp.length || result.length <= 10) result += temp[i++] + ' ';
+		return result.substring(0, 10) + '...';
 	};
 	return (
 		<div
@@ -211,6 +237,28 @@ function ViewParticularProduct() {
 					</div>
 				</>
 			)}
+			<div className='viewparticularproduct__similar__products'>
+				<div className='viewparticularproduct__similar__products__title'>
+					Similar Products
+				</div>
+				<div className='viewparticularproduct__similar__products__product'>
+					{similarProduct.map((similarproduct) => {
+						return (
+							<Link
+								to='as'
+								className='similar__product'
+								key={similarproduct._id}
+							>
+								<ImageHelper2 product={similarproduct} />
+								<div className='viewparticularproduct__similar__products__product__name'>
+									{shortNames(similarproduct.name)}
+								</div>
+								<b>Rs.{similarproduct.price}</b>
+							</Link>
+						);
+					})}
+				</div>
+			</div>
 		</div>
 	);
 }
