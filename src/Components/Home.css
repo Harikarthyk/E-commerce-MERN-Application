@@ -41,6 +41,7 @@
 .home__category__wrapper__title {
 	font-size: 28px;
 
+	text-transform: capitalize;
 	font-weight: bold;
 	border-bottom: 1px solid grey;
 	padding-bottom: 10px;

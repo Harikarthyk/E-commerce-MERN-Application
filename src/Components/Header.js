@@ -44,7 +44,7 @@ function Navbar() {
 	return (
 		<div className='header__container'>
 			<div className='header'>
-				<Link to='/'>
+				<Link className='header__img' to='/'>
 					<img
 						src='https://user-images.githubusercontent.com/54505967/101191949-5aae0580-3680-11eb-81c1-90f0778a741b.png'
 						alt='amazon_logo'
