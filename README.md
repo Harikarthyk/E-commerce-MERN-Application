@@ -25,7 +25,7 @@ add them to the cart, and also purchase them.
 ### Project is created with:
 * Frontend - React
 * Server - Node and Express (API Endpoint)
-* Database - MySql
+* Database - Mongo DB
 
 
 ### Deployment:
