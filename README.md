@@ -15,6 +15,7 @@ add them to the cart, and also purchase them.
 ## Features
 * Authentication with JWT.
 * Forgot Password (OTP is sent to the registered mail) - NodeMailer.
+* Add Products , new Collection , update them , view orders , edit orders - Admin Functionalites.
 * View Products.
 * Add Products to Cart. 
 * Purchase Product.
@@ -28,8 +29,8 @@ add them to the cart, and also purchase them.
 
 
 ### Deployment:
-* Node Application (Server) is hosted in heroku . 
-* React Application (Frontend) is hosted in firbase . 
+* Node Application (Server) is hosted in heroku.
+* React Application (Frontend) is hosted in firbase.
 
 
 	
