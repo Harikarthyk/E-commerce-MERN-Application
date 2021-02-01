@@ -25,7 +25,8 @@ add them to the cart, and also purchase them.
 * Frontend - React
 * Server - Node and Express (API Endpoint)
 * Database - MySql
-<br/>
+
+
 ### Deployment:
 * Node Application (Server) is hosted in heroku . 
 * React Application (Frontend) is hosted in firbase . 
