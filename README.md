@@ -22,13 +22,13 @@ add them to the cart, and also purchase them.
 * Check previous product history.
 	
 ## Technologies
-### Project is created with:
+#### Project is created with:
 * Frontend - React
 * Server - Node and Express (API Endpoint)
 * Database - Mongo DB
 
 
-### Deployment:
+#### Deployment:
 * Node Application (Server) is hosted in heroku.
 * React Application (Frontend) is hosted in firbase.
 
@@ -36,3 +36,12 @@ add them to the cart, and also purchase them.
 	
 ## Demo
 Demo Working of our Project - https://shopify-cloths.web.app/
+
+##### Admin Dashboard Preview 
+
+<img src="https://user-images.githubusercontent.com/54505967/106492276-bf99a680-64dd-11eb-8177-c07231160c0a.png" style="width : 100%;"/>
+
+<img src="https://user-images.githubusercontent.com/54505967/106492256-bc9eb600-64dd-11eb-8f0f-52ecdc25498c.png" style="width : 100%;"/>
+
+<img src="https://user-images.githubusercontent.com/54505967/106492269-be687980-64dd-11eb-9dfc-704fd73b96d1.png" style="width : 100%;"/>
+
