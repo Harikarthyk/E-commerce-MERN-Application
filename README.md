@@ -30,7 +30,7 @@ add them to the cart, and also purchase them.
 
 #### Deployment:
 * Node Application (Server) is hosted in heroku.
-* React Application (Frontend) is hosted in firbase.
+* React Application (Frontend) is hosted in firebase.
 
 
 	
