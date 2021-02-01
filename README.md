@@ -21,13 +21,13 @@ add them to the cart, and also purchase them.
 * Check previous product history.
 	
 ## Technologies
-# Project is created with:
+### Project is created with:
 * Frontend - React
 * Server - Node and Express (API Endpoint)
 * Database - MySql
-
-*Node Application (Server) is hosted in heroku 
-*React Application (Frontend) is hosted in firbase 
+<br/>
+* Node Application (Server) is hosted in heroku 
+* React Application (Frontend) is hosted in firbase 
 
 
 	
