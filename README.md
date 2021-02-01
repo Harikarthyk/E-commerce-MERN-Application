@@ -4,8 +4,8 @@
 ## Table of contents
 * [Description](#Description)
 * [Features](#Features)
-* [Technologies used](#Technologiesused)
-* [Demo Working](#DemoWorking)
+* [Technologies used](#Technologies)
+* [Demo Working](#Demo)
 
 ## Description
 This project has two interfaces, one for Admin who can add products, update them, view orders, and also deliver them, and the other for the common user who can view products, 
@@ -20,11 +20,11 @@ add them to the cart, and also purchase them.
 * Purchase Product.
 * Check previous product history.
 	
-## Technologies used
+## Technologies
 Project is created with:
 * Frontend - React
 * Server - Node and Express (API Endpoint)
 * Database - MySql
 	
-## Demo Working
+## Demo
 Demo Working of our Project - https://shopify-cloths.web.app/
